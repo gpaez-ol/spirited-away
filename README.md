@@ -1,2 +1,2 @@
 # spirited-away
-WebGL Scene for Gracias Computacionales Class based on the spirited away inifinity train from spirited away
+WebGL Scene for Gráficas Computacionales Class based on the inifinity train scene from "Spirited Away".
