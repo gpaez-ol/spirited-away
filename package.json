@@ -1,0 +1,22 @@
+{
+  "name": "spiritedaway",
+  "version": "1.0.0",
+  "description": "The spirited away threejs package",
+  "main": "main.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpaez-ol/spirited-away.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gpaez-ol/spirited-away/issues"
+  },
+  "homepage": "https://github.com/gpaez-ol/spirited-away#readme",
+  "dependencies": {
+    "http-server": "^0.12.3"
+  }
+}

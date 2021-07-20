@@ -13,3 +13,7 @@ We will be recreating the infinity train scene from the movie of Spirited Away, 
 
 For this we will be using threejs which is a javascript library based on webgl
 [threejs library]: https://threejs.org/
+
+To run the repo run the following commands from within the local directory: 
+npm install
+http-server . -p {portNumber} 

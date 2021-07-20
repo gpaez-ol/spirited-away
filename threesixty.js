@@ -22,7 +22,12 @@ function main() {
   
     const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
     camera.position.z = 2;
-  
+    
+    // Logic to load the texture
+    const loader = new THREE.TextureLoader();
+    const bgTexture = loader.load('images/threeskybox.jpeg');
+    scene.background = bgTexture;
+
     const scene = new THREE.Scene();
   
     {
