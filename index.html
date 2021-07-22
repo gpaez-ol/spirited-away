@@ -21,6 +21,25 @@
 		<script type="module">
 		import * as THREE from './js/three.module.js';
 		import  {OrbitControls} from './js/orbitControls.js';
+
+		var PrismGeometry = function(a, b, c, h) {
+			var vs = [a,b,c];
+			var shape = new THREE.Shape();
+			( function f(ctx) {
+				ctx.moveTo(vs[0].x, vs[0].y);
+
+				for (var i = 1; i < vs.length; i++) {
+					ctx.lineTo(vs[i].x, vs[i].y);
+				}
+				ctx.lineTo(vs[0].x, vs[0].y);
+			}) (shape);
+
+			var settings = {};
+			settings.bevelEnabled = false;
+			settings.amount = h;
+			return new THREE.ExtrudeGeometry(shape, settings);
+		};
+
 		function main() {
 		const canvas = document.querySelector('#c');
 		const renderer = new THREE.WebGLRenderer({canvas});
@@ -28,9 +47,9 @@
 		const fov = 75;
 		const aspect = 2;  // the canvas default
 		const near = 0.1;
-		const far = 100;
+		const far = 1000;
 		const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-		camera.position.z = 3;
+		camera.position.z = 100;
 
 		const controls = new OrbitControls(camera, canvas);
 		controls.target.set(0, 0, 0);
@@ -46,26 +65,37 @@
 			scene.add(light);
 		}
 
-		const boxWidth = 1;
-		const boxHeight = 1;
-		const boxDepth = 1;
+		const boxWidth = 100;
+		const boxHeight = 25;
+		const boxDepth = 25;
 		const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 
-		function makeInstance(geometry, color, x) {
+		var A = new THREE.Vector2(0, 0);
+		var B = new THREE.Vector2(30, 10);
+		var C = new THREE.Vector2(20, 32);
+		var height = 25;                   
+		var endpointGeometry = new PrismGeometry(A, B, C, height); 
+
+		function makeInstance(geometry, color, x, y=0, z=0, rx=0, rz=0) {
 			const material = new THREE.MeshPhongMaterial({color});
 
-			const cube = new THREE.Mesh(geometry, material);
-			scene.add(cube);
+			const instance = new THREE.Mesh(geometry, material);
+			scene.add(instance);
 
-			cube.position.x = x;
+			instance.position.x = x;
+			instance.position.y = y;
+			instance.position.z = z;
+			instance.rotation.x = rx;
+			instance.rotation.z = rz;
 
-			return cube;
+			return instance;
 		}
 
-		const cubes = [
-			makeInstance(geometry, 0x44aa88,  0),
-			makeInstance(geometry, 0x8844aa, -2),
-			makeInstance(geometry, 0xaa8844,  2),
+		const wagons = [
+			makeInstance(geometry, 0x44aa88,  -55),
+			makeInstance(geometry, 0x8844aa, 55),
+			makeInstance(endpointGeometry, 0x44aa88, -136, -10, -12, 0, - Math.PI / 4 * .5),
+			makeInstance(endpointGeometry, 0x8844aa, 136, -10, 12, Math.PI, Math.PI - Math.PI / 4 * .5),
 		];
 
 		{
@@ -99,12 +129,12 @@
 			camera.updateProjectionMatrix();
 			}
 
-			cubes.forEach((cube, ndx) => {
-			const speed = 1 + ndx * .1;
-			const rot = time * speed;
-			cube.rotation.x = rot;
-			cube.rotation.y = rot;
-			});
+			// wagons.forEach((cube, ndx) => {
+			// const speed = 1 + ndx * .1;
+			// const rot = time * speed;
+			// cube.rotation.x = rot;
+			// cube.rotation.y = rot;
+			// });
 
 			renderer.render(scene, camera);
 
