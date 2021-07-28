@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>My first three.js app</title>
+		<title>Spirited Away</title>
 		<style>
 			html, body {
 			height: 100%;
@@ -16,12 +16,9 @@
 	</head>
 	<body>
 		<canvas id="c"></canvas>
-		<!-- <script src="js/three.js"></script>
-		<script src="js/orbitControls.js"></script> --> -->
 		<script type="module">
 		import * as THREE from './js/three.module.js';
 		import  {OrbitControls} from './js/orbitControls.js';
-
 		var PrismGeometry = function(a, b, c, h) {
 			var vs = [a,b,c];
 			var shape = new THREE.Shape();
@@ -33,7 +30,6 @@
 				}
 				ctx.lineTo(vs[0].x, vs[0].y);
 			}) (shape);
-
 			var settings = {};
 			settings.bevelEnabled = false;
 			settings.amount = h;
@@ -65,10 +61,47 @@
 			scene.add(light);
 		}
 
-		const boxWidth = 100;
-		const boxHeight = 25;
-		const boxDepth = 25;
-		const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+		const mainBoxWidth = 50;
+		const mainBoxHeight = 10;
+		const mainBoxDepth = 25;
+		const mainBoxGeometry = new THREE.BoxGeometry(mainBoxWidth, mainBoxHeight, mainBoxDepth);
+		const mainBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
+		const mainBoxMaterial = new THREE.MeshBasicMaterial( { map: mainBoxTexture } );
+
+		const rightMainBoxWidth = 25;
+		const rightMainBoxHeight = 3;
+		const rightMainBoxDepth = 25;
+		const rightMainBoxGeometry = new THREE.BoxGeometry(rightMainBoxWidth, rightMainBoxHeight, rightMainBoxDepth);
+		const rightMainBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
+		const rightMainBoxMaterial = new THREE.MeshBasicMaterial( { map: rightMainBoxTexture } );
+
+		const leftMainBoxWidth = 25;
+		const leftMainBoxHeight = 3;
+		const leftMainBoxDepth = 25;
+		const leftMainBoxGeometry = new THREE.BoxGeometry(leftMainBoxWidth, leftMainBoxHeight, leftMainBoxDepth);
+		const leftMainBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
+		const leftMainBoxMaterial = new THREE.MeshBasicMaterial( { map: leftMainBoxTexture } );
+
+		const lowerBoxWidth = 100;
+		const lowerBoxHeight = 7.5;
+		const lowerBoxDepth = 25;
+		const lowerBoxGeometry = new THREE.BoxGeometry(lowerBoxWidth, lowerBoxHeight, lowerBoxDepth);
+		const lowerBoxTexture = new THREE.TextureLoader().load( 'images/red-seamless-metal.jpg' ); 
+		const lowerBoxMaterial = new THREE.MeshBasicMaterial( { map: lowerBoxTexture } );
+
+		const upperBoxWidth = 100;
+		const upperBoxHeight = 4;
+		const upperBoxDepth = 25;
+		const upperBoxGeometry = new THREE.BoxGeometry(upperBoxWidth, upperBoxHeight, upperBoxDepth);
+		const upperBoxTexture = new THREE.TextureLoader().load( 'images/red-seamless-metal.jpg' ); 
+		const upperBoxMaterial = new THREE.MeshBasicMaterial( { map: upperBoxTexture } );
+
+		const linkBoxWidth = 12;
+		const linkBoxHeight = 2;
+		const linkBoxDepth = 25;
+		const linkBoxGeometry = new THREE.BoxGeometry(linkBoxWidth, linkBoxHeight, linkBoxDepth);
+		const linkBoxTexture = new THREE.TextureLoader().load( 'images/seamless-metal.jpg' ); 
+		const linkBoxMaterial = new THREE.MeshBasicMaterial( { map: linkBoxTexture } );
 
 		var A = new THREE.Vector2(0, 0);
 		var B = new THREE.Vector2(30, 10);
@@ -76,26 +109,42 @@
 		var height = 25;                   
 		var endpointGeometry = new PrismGeometry(A, B, C, height); 
 
-		function makeInstance(geometry, color, x, y=0, z=0, rx=0, rz=0) {
-			const material = new THREE.MeshPhongMaterial({color});
-
+		function makeInstance(geometry,x, y=0, z=0, rx=0, rz=0,material=mainBoxMaterial) {
 			const instance = new THREE.Mesh(geometry, material);
 			scene.add(instance);
-
 			instance.position.x = x;
 			instance.position.y = y;
 			instance.position.z = z;
 			instance.rotation.x = rx;
 			instance.rotation.z = rz;
-
+			instance.material = material;
 			return instance;
 		}
 
 		const wagons = [
-			makeInstance(geometry, 0x44aa88,  -55),
-			makeInstance(geometry, 0x8844aa, 55),
-			makeInstance(endpointGeometry, 0x44aa88, -136, -10, -12, 0, - Math.PI / 4 * .5),
-			makeInstance(endpointGeometry, 0x8844aa, 136, -10, 12, Math.PI, Math.PI - Math.PI / 4 * .5),
+			//left train box
+			makeInstance(leftMainBoxGeometry,-92,-4),
+			makeInstance(leftMainBoxGeometry,-92,4),
+			makeInstance(mainBoxGeometry,-55),
+			makeInstance(rightMainBoxGeometry,-18,-4), // lower
+			makeInstance(rightMainBoxGeometry,-18,4), // upper
+			makeInstance(lowerBoxGeometry,-55,-8.5,0,0,0,lowerBoxMaterial),
+			makeInstance(upperBoxGeometry,-55,7,0,0,0,upperBoxMaterial),
+
+			makeInstance(linkBoxGeometry,0,-6,0,0,0,linkBoxMaterial), // chain-link
+
+
+			//right train box
+			makeInstance(leftMainBoxGeometry,18,-4),
+			makeInstance(leftMainBoxGeometry,18,4),
+			makeInstance(mainBoxGeometry,55),
+			makeInstance(rightMainBoxGeometry,92,-4), // lower
+			makeInstance(rightMainBoxGeometry,92,4), // upper
+			makeInstance(lowerBoxGeometry,55,-8,0,0,0,lowerBoxMaterial),
+			makeInstance(upperBoxGeometry,55,7,0,0,0,upperBoxMaterial),
+
+			makeInstance(endpointGeometry, -136, -10, -12, 0, - Math.PI / 4 * .5),
+			makeInstance(endpointGeometry,136, -10, 12, Math.PI, Math.PI - Math.PI / 4 * .5),
 		];
 
 		{
