@@ -61,19 +61,8 @@
 			scene.add(light);
 		}
 
-		const mainBoxWidth = 50;
-		const mainBoxHeight = 10;
-		const mainBoxDepth = 25;
-		const mainBoxGeometry = new THREE.BoxGeometry(mainBoxWidth, mainBoxHeight, mainBoxDepth);
 		const mainBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
 		const mainBoxMaterial = new THREE.MeshBasicMaterial( { map: mainBoxTexture } );
-
-		const rightMainBoxWidth = 25;
-		const rightMainBoxHeight = 3;
-		const rightMainBoxDepth = 25;
-		const rightMainBoxGeometry = new THREE.BoxGeometry(rightMainBoxWidth, rightMainBoxHeight, rightMainBoxDepth);
-		const rightMainBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
-		const rightMainBoxMaterial = new THREE.MeshBasicMaterial( { map: rightMainBoxTexture } );
 
 		const slimBoxWidth = 100;
 		const slimBoxHeight = 3;
@@ -81,13 +70,6 @@
 		const slimBoxGeometry = new THREE.BoxGeometry(slimBoxWidth, slimBoxHeight, slimBoxDepth);
 		const slimBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
 		const slimBoxMaterial = new THREE.MeshBasicMaterial( { map: slimBoxTexture } );
-
-		const leftMainBoxWidth = 25;
-		const leftMainBoxHeight = 3;
-		const leftMainBoxDepth = 25;
-		const leftMainBoxGeometry = new THREE.BoxGeometry(leftMainBoxWidth, leftMainBoxHeight, leftMainBoxDepth);
-		const leftMainBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
-		const leftMainBoxMaterial = new THREE.MeshBasicMaterial( { map: leftMainBoxTexture } );
 
 		const floorWidth = 100;
 		const floorHeight = 7.5;
@@ -121,14 +103,14 @@
 		const windowHeight = 5;
 		const windowDepth = 25;
 		const windowGeometry = new THREE.BoxGeometry(windowWidth, windowHeight, windowDepth);
-		const windowTexture = new THREE.TextureLoader().load( 'images/seamless-metal.jpg' ); 
+		const windowTexture = new THREE.TextureLoader().load( 'images/windows-seamless.jpg' ); 
 		const windowMaterial = new THREE.MeshBasicMaterial( { map: windowTexture } );
 
 		const lastWindowWidth = 8;
 		const lastWindowHeight = 5;
 		const lastWindowDepth = 25;
 		const lastWindowGeometry = new THREE.BoxGeometry(lastWindowWidth, lastWindowHeight, lastWindowDepth);
-		const lastWindowTexture = new THREE.TextureLoader().load( 'images/seamless-metal.jpg' ); 
+		const lastWindowTexture = new THREE.TextureLoader().load( 'images/windows-seamless.jpg' ); 
 		const lastWindowMaterial = new THREE.MeshBasicMaterial( { map: lastWindowTexture } );
 
 		var A = new THREE.Vector2(0, 0);
@@ -160,13 +142,13 @@
 			// train fill with space for windows 
 			makeInstance(lastWindowGeometry,-9,0,0,0,0,windowMaterial), 
 			makeInstance(smallBoxGeometry,-18,0,0,0,0,), // upper
-			makeInstance(lastWindowGeometry,-28,0,0,0,0,windowMaterial), 
+			makeInstance(windowGeometry,-28,0,0,0,0,windowMaterial), 
 			makeInstance(smallBoxGeometry,-38,0,0,0,0,), // upper
-			makeInstance(lastWindowGeometry,-48,0,0,0,0,windowMaterial), 
+			makeInstance(windowGeometry,-48,0,0,0,0,windowMaterial), 
 			makeInstance(smallBoxGeometry,-58,0,0,0,0,), // upper
-			makeInstance(lastWindowGeometry,-68,0,0,0,0,windowMaterial), 
+			makeInstance(windowGeometry,-68,0,0,0,0,windowMaterial), 
 			makeInstance(smallBoxGeometry,-78,0,0,0,0,), // upper
-			makeInstance(lastWindowGeometry,-88,0,0,0,0,windowMaterial), 
+			makeInstance(windowGeometry,-88,0,0,0,0,windowMaterial), 
 			makeInstance(smallBoxGeometry,-100,0,0,0,0,), // upper
 
 			//chain-link
