@@ -75,6 +75,13 @@
 		const rightMainBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
 		const rightMainBoxMaterial = new THREE.MeshBasicMaterial( { map: rightMainBoxTexture } );
 
+		const slimBoxWidth = 100;
+		const slimBoxHeight = 3;
+		const slimBoxDepth = 25;
+		const slimBoxGeometry = new THREE.BoxGeometry(slimBoxWidth, slimBoxHeight, slimBoxDepth);
+		const slimBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
+		const slimBoxMaterial = new THREE.MeshBasicMaterial( { map: slimBoxTexture } );
+
 		const leftMainBoxWidth = 25;
 		const leftMainBoxHeight = 3;
 		const leftMainBoxDepth = 25;
@@ -82,19 +89,19 @@
 		const leftMainBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
 		const leftMainBoxMaterial = new THREE.MeshBasicMaterial( { map: leftMainBoxTexture } );
 
-		const lowerBoxWidth = 100;
-		const lowerBoxHeight = 7.5;
-		const lowerBoxDepth = 25;
-		const lowerBoxGeometry = new THREE.BoxGeometry(lowerBoxWidth, lowerBoxHeight, lowerBoxDepth);
-		const lowerBoxTexture = new THREE.TextureLoader().load( 'images/red-seamless-metal.jpg' ); 
-		const lowerBoxMaterial = new THREE.MeshBasicMaterial( { map: lowerBoxTexture } );
+		const floorWidth = 100;
+		const floorHeight = 7.5;
+		const floorDepth = 25;
+		const floorGeometry = new THREE.BoxGeometry(floorWidth, floorHeight, floorDepth);
+		const floorTexture = new THREE.TextureLoader().load( 'images/red-seamless-metal.jpg' ); 
+		const floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture } );
 
-		const upperBoxWidth = 100;
-		const upperBoxHeight = 4;
-		const upperBoxDepth = 25;
-		const upperBoxGeometry = new THREE.BoxGeometry(upperBoxWidth, upperBoxHeight, upperBoxDepth);
-		const upperBoxTexture = new THREE.TextureLoader().load( 'images/red-seamless-metal.jpg' ); 
-		const upperBoxMaterial = new THREE.MeshBasicMaterial( { map: upperBoxTexture } );
+		const roofWidth = 100;
+		const roofHeight = 4;
+		const roofDepth = 25;
+		const roofGeometry = new THREE.BoxGeometry(roofWidth, roofHeight, roofDepth);
+		const roofTexture = new THREE.TextureLoader().load( 'images/red-seamless-metal.jpg' ); 
+		const roofMaterial = new THREE.MeshBasicMaterial( { map: roofTexture } );
 
 		const linkBoxWidth = 12;
 		const linkBoxHeight = 2;
@@ -102,6 +109,27 @@
 		const linkBoxGeometry = new THREE.BoxGeometry(linkBoxWidth, linkBoxHeight, linkBoxDepth);
 		const linkBoxTexture = new THREE.TextureLoader().load( 'images/seamless-metal.jpg' ); 
 		const linkBoxMaterial = new THREE.MeshBasicMaterial( { map: linkBoxTexture } );
+
+		const smallBoxWidth = 10;
+		const smallBoxHeight = 5;
+		const smallBoxDepth = 25;
+		const smallBoxGeometry = new THREE.BoxGeometry(smallBoxWidth, smallBoxHeight, smallBoxDepth);
+		const smallBoxTexture = new THREE.TextureLoader().load( 'images/yellow-seamless-metal.jpg' ); 
+		const smallBoxMaterial = new THREE.MeshBasicMaterial( { map: smallBoxTexture } );
+
+		const windowWidth = 10;
+		const windowHeight = 5;
+		const windowDepth = 25;
+		const windowGeometry = new THREE.BoxGeometry(windowWidth, windowHeight, windowDepth);
+		const windowTexture = new THREE.TextureLoader().load( 'images/seamless-metal.jpg' ); 
+		const windowMaterial = new THREE.MeshBasicMaterial( { map: windowTexture } );
+
+		const lastWindowWidth = 8;
+		const lastWindowHeight = 5;
+		const lastWindowDepth = 25;
+		const lastWindowGeometry = new THREE.BoxGeometry(lastWindowWidth, lastWindowHeight, lastWindowDepth);
+		const lastWindowTexture = new THREE.TextureLoader().load( 'images/seamless-metal.jpg' ); 
+		const lastWindowMaterial = new THREE.MeshBasicMaterial( { map: lastWindowTexture } );
 
 		var A = new THREE.Vector2(0, 0);
 		var B = new THREE.Vector2(30, 10);
@@ -123,28 +151,72 @@
 
 		const wagons = [
 			//left train box
-			makeInstance(leftMainBoxGeometry,-92,-4),
-			makeInstance(leftMainBoxGeometry,-92,4),
-			makeInstance(mainBoxGeometry,-55),
-			makeInstance(rightMainBoxGeometry,-18,-4), // lower
-			makeInstance(rightMainBoxGeometry,-18,4), // upper
-			makeInstance(lowerBoxGeometry,-55,-8.5,0,0,0,lowerBoxMaterial),
-			makeInstance(upperBoxGeometry,-55,7,0,0,0,upperBoxMaterial),
+			//train shell
+			makeInstance(slimBoxGeometry,-55,-4), // lower
+			makeInstance(slimBoxGeometry,-55,4), // upper
+			makeInstance(floorGeometry,-55,-8.5,0,0,0,floorMaterial),
+			makeInstance(roofGeometry,-55,7,0,0,0,roofMaterial),
 
-			makeInstance(linkBoxGeometry,0,-6,0,0,0,linkBoxMaterial), // chain-link
+			// train fill with space for windows 
+			makeInstance(lastWindowGeometry,-9,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,-18,0,0,0,0,), // upper
+			makeInstance(lastWindowGeometry,-28,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,-38,0,0,0,0,), // upper
+			makeInstance(lastWindowGeometry,-48,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,-58,0,0,0,0,), // upper
+			makeInstance(lastWindowGeometry,-68,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,-78,0,0,0,0,), // upper
+			makeInstance(lastWindowGeometry,-88,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,-100,0,0,0,0,), // upper
 
+			//chain-link
+			makeInstance(linkBoxGeometry,0,-6,0,0,0,linkBoxMaterial),
+
+
+			//mid train box
+			// train shell
+			makeInstance(slimBoxGeometry,55,-4), // lower
+			makeInstance(slimBoxGeometry,55,4), // upper
+			makeInstance(floorGeometry,55,-8,0,0,0,floorMaterial),
+			makeInstance(roofGeometry,55,7,0,0,0,roofMaterial),
+
+			// train fill with windows
+			makeInstance(lastWindowGeometry,9,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,18,0,0,0,0,), 
+			makeInstance(windowGeometry,28,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,38,0,0,0,0,), 
+			makeInstance(windowGeometry,48,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,58,0,0,0,0,), 
+			makeInstance(windowGeometry,68,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,78,0,0,0,0,), 
+			makeInstance(windowGeometry,88,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,100,0,0,0,0,), 
+			
+			
+			//chain-link
+			makeInstance(linkBoxGeometry,110,-6,0,0,0,linkBoxMaterial),
 
 			//right train box
-			makeInstance(leftMainBoxGeometry,18,-4),
-			makeInstance(leftMainBoxGeometry,18,4),
-			makeInstance(mainBoxGeometry,55),
-			makeInstance(rightMainBoxGeometry,92,-4), // lower
-			makeInstance(rightMainBoxGeometry,92,4), // upper
-			makeInstance(lowerBoxGeometry,55,-8,0,0,0,lowerBoxMaterial),
-			makeInstance(upperBoxGeometry,55,7,0,0,0,upperBoxMaterial),
+			// train shell
+			makeInstance(slimBoxGeometry,165,-4), // lower
+			makeInstance(slimBoxGeometry,165,4), // upper
+			makeInstance(floorGeometry,165,-8,0,0,0,floorMaterial),
+			makeInstance(roofGeometry,165,7,0,0,0,roofMaterial),
 
+			// train fill with windows
+			makeInstance(lastWindowGeometry,119,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,128,0,0,0,0,), 
+			makeInstance(windowGeometry,138,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,148,0,0,0,0,), 
+			makeInstance(windowGeometry,158,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,168,0,0,0,0,), 
+			makeInstance(windowGeometry,178,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,188,0,0,0,0,), 
+			makeInstance(windowGeometry,198,0,0,0,0,windowMaterial), 
+			makeInstance(smallBoxGeometry,218,0,0,0,0,), 
+			//train front and back
 			makeInstance(endpointGeometry, -136, -10, -12, 0, - Math.PI / 4 * .5),
-			makeInstance(endpointGeometry,136, -10, 12, Math.PI, Math.PI - Math.PI / 4 * .5),
+			makeInstance(endpointGeometry,250, -10, 12, Math.PI, Math.PI - Math.PI / 4 * .5),
 		];
 
 		{
