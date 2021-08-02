@@ -19,7 +19,7 @@
 		<script type="module">
 		import * as THREE from './js/three.module.js';
 		import  {OrbitControls} from './js/orbitControls.js';
-		var PrismGeometry = function(a, b, c, h) {
+		var PrismGeometry = function(a, b, c, h, material) {
 			var vs = [a,b,c];
 			var shape = new THREE.Shape();
 			( function f(ctx) {
@@ -30,6 +30,7 @@
 				}
 				ctx.lineTo(vs[0].x, vs[0].y);
 			}) (shape);
+			shape.material = material;
 			var settings = {};
 			settings.bevelEnabled = false;
 			settings.amount = h;
@@ -117,7 +118,7 @@
 		var B = new THREE.Vector2(30, 10);
 		var C = new THREE.Vector2(20, 32);
 		var height = 25;                   
-		var endpointGeometry = new PrismGeometry(A, B, C, height); 
+		var endpointGeometry = new PrismGeometry(A, B, C, height, mainBoxMaterial); 
 
 		function makeInstance(geometry,x, y=0, z=0, rx=0, rz=0,material=mainBoxMaterial) {
 			const instance = new THREE.Mesh(geometry, material);
